@@ -23,14 +23,14 @@ pipeline {
         stage('Build MSSQL') {
             steps {
                 script {
-                    sh "docker build -f Dockerfile.mssql -t oleg222/project:mssql.v.${BUILD_NUMBER}.dev --no-cache  ."
+                    sh "docker build -f Dockerfile.mssql -t oleg222/project1:mssql.v.${BUILD_NUMBER}.dev --no-cache  ."
                 }
             }
         }
         stage('Start MSSQL') {
             steps {
                 script {
-                    sh "docker run -d --name mssql --hostname mssql --network project_net --ip 10.0.0.2 -p 1433:1433 --restart unless-stopped oleg222/project:mssql.v.${BUILD_NUMBER}.dev"
+                    sh "docker run -d --name mssql --hostname mssql --network project_net --ip 10.0.0.2 -p 1433:1433 --restart unless-stopped oleg222/project1:mssql.v.${BUILD_NUMBER}.dev"
                 }
             }
         }
@@ -90,14 +90,14 @@ pipeline {
         stage('Build Backend') {
             steps {
                 script {
-                    sh "docker build -f Dockerfile.backend -t oleg222/project:backend.v.${BUILD_NUMBER}.dev --no-cache  ."
+                    sh "docker build -f Dockerfile.backend -t oleg222/project1:backend.v.${BUILD_NUMBER}.dev --no-cache  ."
                 }
             }
         }
         stage('Start Backend') {
             steps {
                 script {
-                    sh "docker run -d --name backend --hostname backend --network project_net --ip 10.0.0.3 -p 5034:5034 -p 52119:52119 --restart unless-stopped oleg222/project:backend.v.${BUILD_NUMBER}.dev"
+                    sh "docker run -d --name backend --hostname backend --network project_net --ip 10.0.0.3 -p 5034:5034 -p 52119:52119 --restart unless-stopped oleg222/project1:backend.v.${BUILD_NUMBER}.dev"
                 }
             }
         }
@@ -149,14 +149,14 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 script {
-                    sh "docker build -f Dockerfile.frontend -t oleg222/project:frontend.v.${BUILD_NUMBER}.dev --no-cache  ."
+                    sh "docker build -f Dockerfile.frontend -t oleg222/project1:frontend.v.${BUILD_NUMBER}.dev --no-cache  ."
                 }
             }
         }
         stage('Start Frontend') {
             steps {
                 script {
-                    sh "docker run -d --name frontend --hostname frontend --network project_net --ip 10.0.0.4 -p 81:80 --restart unless-stopped oleg222/project:frontend.v.${BUILD_NUMBER}.dev"
+                    sh "docker run -d --name frontend --hostname frontend --network project_net --ip 10.0.0.4 -p 81:80 --restart unless-stopped oleg222/project1:frontend.v.${BUILD_NUMBER}.dev"
                 }
             }
         }
@@ -186,12 +186,12 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                         sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}"
                         sh "docker stop mssql frontend backend"
-                        sh "docker commit mssql oleg222/project:mssql.v.${BUILD_NUMBER}.lts"
-                        sh "docker push oleg222/project:mssql.v.${BUILD_NUMBER}.lts"
-                        sh "docker commit backend oleg222/project:backend.v.${BUILD_NUMBER}.lts"
-                        sh "docker push oleg222/project:backend.v.${BUILD_NUMBER}.lts"
-                         sh "docker commit frontend oleg222/project:frontend.v.${BUILD_NUMBER}.lts"
-                        sh "docker push oleg222/project:frontend.v.${BUILD_NUMBER}.lts"
+                        sh "docker commit mssql oleg222/project1:mssql.v.${BUILD_NUMBER}.lts"
+                        sh "docker push oleg222/project1:mssql.v.${BUILD_NUMBER}.lts"
+                        sh "docker commit backend oleg222/project1:backend.v.${BUILD_NUMBER}.lts"
+                        sh "docker push oleg222/project1:backend.v.${BUILD_NUMBER}.lts"
+                         sh "docker commit frontend oleg222/project1:frontend.v.${BUILD_NUMBER}.lts"
+                        sh "docker push oleg222/project1:frontend.v.${BUILD_NUMBER}.lts"
                     }
                 }
             }
