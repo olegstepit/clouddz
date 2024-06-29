@@ -128,7 +128,7 @@ pipeline {
                         if (fileExists('FrontEnd')) {
                             sh 'GIT_SSH_COMMAND="ssh -i $SSH_KEY" git -C FrontEnd pull origin FrontEnd'
                         } else {
-                            sh 'GIT_SSH_COMMAND="ssh -i $SSH_KEY" git clone git@github.com:jj975/project.git -b FrontEnd FrontEnd'
+                            sh 'GIT_SSH_COMMAND="ssh -i $SSH_KEY" git@github.com:olegstepit/clouddz.git -b FrontEnd FrontEnd'
                         }
                         
                     }
