@@ -1,1 +1,0 @@
-/usr/src/app/run.sh & /opt/mssql/bin/sqlservr
